@@ -7,6 +7,8 @@ import Assignments from "./components/Assignments";
 import Classes from "./components/Classes";
 import Profile from "./components/Profile";
 import Register from "./components/Register";
+import Header from "./components/Header";
+import EmailVerification from "./components/EmailVerification";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -18,6 +20,11 @@ ReactDOM.render(
           <Route path="classes" element={<Classes />} />
           <Route path="profile" element={<Profile />} />
           <Route path="register" element={<Register />} />
+          <Route path="dashboard-student" element={<Header />} />
+          <Route
+            path="register/email-verification"
+            element={<EmailVerification />}
+          />
         </Routes>
       </BrowserRouter>
     </ChakraProvider>
