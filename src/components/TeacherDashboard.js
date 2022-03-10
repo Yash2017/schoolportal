@@ -8,7 +8,7 @@ function TeacherDashboard() {
         <Link to="/profile">Profile</Link>
       </Button>
       <Button variant="link" colorScheme="teal" p="5">
-        <Link to="/classes">Classes</Link>
+        <Link to="/dashboard-teacher/view-assignment">View Assignments</Link>
       </Button>
       <Button variant="link" colorScheme="teal" padding="5">
         <Link to="/dashboard-teacher/create-assignment">

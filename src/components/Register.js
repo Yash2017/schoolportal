@@ -10,6 +10,8 @@ import {
   Heading,
   Text,
   CircularProgress,
+  useToast,
+  Select,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -20,12 +22,14 @@ const api = axios.create({
 });
 
 export default function Register() {
+  const toast = useToast();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [emailValidity, setEmailValidity] = useState("");
+  const [subject, setSubject] = useState("");
   const onRegister = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -35,6 +39,7 @@ export default function Register() {
         password: password,
         email: email,
         role: "student",
+        class: subject,
       });
       if (response.data.msg === "Error") {
         console.log(response.data);
@@ -74,6 +79,19 @@ export default function Register() {
               id="name"
               type="text"
             />
+            <FormLabel mt="4">Select a Subject</FormLabel>
+            <Select
+              onChange={(e) => {
+                setSubject(e.target.value);
+              }}
+              placeholder="Select Class"
+              size={"md"}
+              width="full"
+            >
+              <option value="Math">Math</option>
+              <option value="Science">Science</option>
+              <option value="English">English</option>
+            </Select>
             <FormLabel flex="1" mt="5" htmlFor="email">
               Email address
             </FormLabel>

@@ -30,7 +30,7 @@ app.post("/register", (req, res) => {
     const id = String(uuidv4()).slice(0, 4);
     console.log(id);
     db.query(
-      `INSERT INTO STUDENTS_NEW VALUES('${req.body.email}', '${req.body.password}', '${req.body.name}', '${id}', '${req.body.role}')`,
+      `INSERT INTO STUDENTS_NEW VALUES('${req.body.email}', '${req.body.password}', '${req.body.name}', '${id}', '${req.body.role}', '${req.body.class}')`,
       (err, result) => {
         if (result) {
           console.log(result);
@@ -53,7 +53,7 @@ app.post("/register", (req, res) => {
           };
           transporter.sendMail(mailOptions, async (err, info) => {
             if (err) {
-              console.log(err);
+              //console.log(err);
               return res.json("Error");
             } else {
               return res.json({
@@ -199,17 +199,94 @@ app.delete("/delete-user", verifyToken, (req, res) => {
   }
 });
 
-app.post("/create-assignment", (req, res) => {
+const getClass = (req, res, next) => {
+  db.query(
+    `SELECT * FROM students_new WHERE email = ?`,
+    [req.email],
+    (err, result) => {
+      req.class = result[0].class;
+      next();
+    }
+  );
+};
+
+app.post("/create-assignment", verifyToken, getClass, (req, res) => {
   //console.log(req.body);
   //const { name, password, email } = req.body;
   //console.log(pass);
   try {
-    console.log(req.body.otp);
     db.query(
-      `INSERT INTO assignment VALUES('${req.body.name}', '${req.body.email}')`,
+      `INSERT INTO assignment VALUES('${req.body.name}', '${req.body.email}', '${req.class}')`,
       (err, results) => {
         if (results) {
           return res.json("Success");
+        } else {
+          return res.json(err);
+        }
+        //else if (err) res.json(err);
+      }
+    );
+    //res.send("Created the user");
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.get("/get-assignments", verifyToken, (req, res) => {
+  //console.log(req.body);
+  //const { name, password, email } = req.body;
+  //console.log(pass);
+  try {
+    db.query(`SELECT * FROM assignment`, (err, results) => {
+      if (results) {
+        console.log(results);
+        return res.json(results);
+      } else {
+        return res.json(err);
+      }
+      //else if (err) res.json(err);
+    });
+    //res.send("Created the user");
+  } catch (err) {
+    console.log(err);
+  }
+});
+app.delete("/delete-assignment", verifyToken, (req, res) => {
+  //console.log(req.body);
+  //const { name, password, email } = req.body;
+  //console.log(pass);
+  try {
+    console.log(req.body.email);
+    db.query(
+      `DELETE FROM assignment WHERE due = ?`,
+      [req.body.due],
+      (err, results) => {
+        if (results) {
+          //console.log(results);
+          console.log(results);
+          return res.json(results);
+        }
+        //else if (err) res.json(err);
+      }
+    );
+    //res.send("Created the user");
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.get("/get-my-assignment", verifyToken, getClass, (req, res) => {
+  //console.log(req.body);
+  //const { name, password, email } = req.body;
+  //console.log(pass);
+  try {
+    db.query(
+      `SELECT * FROM assignment WHERE class = ?`,
+      [req.class],
+      (err, results) => {
+        if (results) {
+          console.log(results);
+          return res.json(results);
         } else {
           return res.json(err);
         }

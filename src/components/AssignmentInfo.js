@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Text, Button, Flex } from "@chakra-ui/react";
 import { FaTrash } from "react-icons/fa";
-function UserInfo({ name, email, role, delFunc, userClass }) {
+function AssignmentInfo({ name, dueDate, deleteAssignment }) {
   return (
     <Flex ml="8" mr="8" mb="8">
       <Box
@@ -14,16 +14,18 @@ function UserInfo({ name, email, role, delFunc, userClass }) {
         alignSelf="center"
       >
         <Text mt="4">Name: {name}</Text>
-        <Text mt="4">Email: {email}</Text>
-        <Text mt="4">Role: {role}</Text>
-        <Text mt="4">Class: {userClass}</Text>
-        <Button mt="4" leftIcon={<FaTrash />} onClick={() => delFunc(email)}>
+        <Text mt="4">Due: {dueDate}</Text>
+        <Button
+          mt="4"
+          leftIcon={<FaTrash />}
+          onClick={() => deleteAssignment(dueDate)}
+        >
           {" "}
-          Remove User{" "}
+          Remove Assignment{" "}
         </Button>
       </Box>
     </Flex>
   );
 }
 
-export default UserInfo;
+export default AssignmentInfo;

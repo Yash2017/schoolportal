@@ -9,10 +9,12 @@ import {
   Input,
   Button,
   CircularProgress,
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 function EmailVerification() {
+  const toast = useToast();
   const navigate = useNavigate();
   const [otp, setOtp] = useState("");
   const [otpValidity, setOtpValidity] = useState("");
@@ -31,8 +33,25 @@ function EmailVerification() {
         setLoading(false);
         setOtp("");
         console.log(response.data[0].role);
-        if (response.data[0].role === "teacher") navigate(-1);
-        else navigate("/");
+        if (response.data[0].role === "teacher") {
+          toast({
+            title: "Account Created",
+            description: "We've created your account",
+            status: "success",
+            duration: 9000,
+            isClosable: true,
+          });
+          navigate(-1);
+        } else {
+          toast({
+            title: "Account Created",
+            description: "We've created your account. Please login here",
+            status: "success",
+            duration: 9000,
+            isClosable: true,
+          });
+          navigate("/");
+        }
       } else {
         setOtpValidity("true");
         setLoading(false);

@@ -22,10 +22,18 @@ function CreateAssignment() {
     e.preventDefault();
     setLoading("rue");
     try {
-      const response = await api.post("create-assignment", {
-        name: name,
-        email: email,
-      });
+      const response = await api.post(
+        "create-assignment",
+        {
+          name: name,
+          email: email.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }),
+        },
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+        }
+      );
       if (response.data === "Success") {
         setName("");
         setLoading("");
@@ -66,7 +74,10 @@ function CreateAssignment() {
               </FormLabel>
               <Input
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                  console.log(email);
+                }}
                 flex="1"
                 id="date"
                 type="datetime-local"

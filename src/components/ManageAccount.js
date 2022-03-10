@@ -43,6 +43,7 @@ function ManageAccount() {
               email={user.email}
               role={user.role}
               delFunc={deleteUser}
+              userClass={user.class}
             />
           );
         })}

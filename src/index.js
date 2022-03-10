@@ -15,6 +15,8 @@ import CreateTeacher from "./components/CreateTeacher";
 import ManageAccount from "./components/ManageAccount";
 import TeacherDashboard from "./components/TeacherDashboard";
 import CreateAssignment from "./components/CreateAssignment";
+import ViewAssignment from "./components/ViewAssignment";
+import StudentDashboard from "./components/StudentDashboard";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -26,11 +28,15 @@ ReactDOM.render(
             <Route path="assignments" element={<Assignments />} />
             <Route path="classes" element={<Classes />} />
             <Route path="profile" element={<Profile />} />
-            <Route path="dashboard-student" element={<Header />} />
+            <Route path="dashboard-student" element={<StudentDashboard />} />
             <Route path="dashboard-teacher" element={<TeacherDashboard />} />
             <Route
               path="dashboard-teacher/create-assignment"
               element={<CreateAssignment />}
+            />
+            <Route
+              path="dashboard-teacher/view-assignment"
+              element={<ViewAssignment />}
             />
             <Route path="admin" element={<Admin />} />
             <Route path="admin/create-teacher" element={<CreateTeacher />} />

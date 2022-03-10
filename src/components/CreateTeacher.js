@@ -3,7 +3,7 @@ import Admin from "./Admin";
 import {
   Flex,
   Box,
-  Heading,
+  Select,
   FormControl,
   FormLabel,
   Input,
@@ -20,17 +20,20 @@ function CreateTeacher() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [subject, setSubject] = useState("");
   const [loading, setLoading] = useState("");
   const [emailValidity, setEmailValidity] = useState("");
   const onRegister = async (e) => {
     e.preventDefault();
-    setLoading("true");
+    console.log(subject);
+    setLoading("rue");
     try {
       const response = await api.post("register", {
         name: name,
         password: password,
         email: email,
         role: "teacher",
+        class: subject,
       });
       if (response.data.msg === "Error") {
         console.log(response.data);
@@ -89,6 +92,19 @@ function CreateTeacher() {
                 id="password"
                 type="password"
               />
+              <FormLabel mt="4">Select a Subject</FormLabel>
+              <Select
+                onChange={(e) => {
+                  setSubject(e.target.value);
+                }}
+                placeholder="Select Class"
+                size={"md"}
+                width="full"
+              >
+                <option value="Math">Math</option>
+                <option value="Science">Science</option>
+                <option value="English">English</option>
+              </Select>
               <Button
                 width="full"
                 mt="4"
