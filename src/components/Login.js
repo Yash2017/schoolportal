@@ -24,6 +24,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [emailValidity, setEmailValidity] = useState("");
+  const [sliderValue, setSliderValue] = useState(0);
   const api = axios.create({
     baseURL: "http://localhost:4000/",
   });
@@ -34,17 +35,22 @@ export default function Login() {
       const response = await api.post("login", {
         password: password,
         email: email,
+        role: sliderValue ? "teacher" : "student",
       });
-      if (response.data.length) {
+      if (response.data.msg === "Error") {
         setLoading(false);
         setEmail("");
         setPassword("");
-        navigate("dashboard-student");
-      } else {
         setEmailValidity("true");
+      } else {
+        localStorage.setItem("token", response.data.token);
         setLoading(false);
         setEmail("");
         setPassword("");
+        if (email === "admin@admin.com") navigate("admin");
+        else if (sliderValue === 1) {
+          navigate("dashboard-teacher");
+        } else navigate("dashboard-student");
       }
     } catch (e) {
       console.log(e);
@@ -101,7 +107,15 @@ export default function Login() {
           <Text align="left" flex="1">
             Student
           </Text>
-          <Slider flex="1" defaultValue={0} min={0} max={1} step={1}>
+          <Slider
+            onChange={(val) => setSliderValue(val)}
+            flex="1"
+            defaultValue={0}
+            min={0}
+            max={1}
+            step={1}
+            value={sliderValue}
+          >
             <SliderTrack bg="teal">
               <Box position="relative" right={10} />
               <SliderFilledTrack bg="teal" />

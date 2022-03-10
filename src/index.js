@@ -8,7 +8,13 @@ import Classes from "./components/Classes";
 import Profile from "./components/Profile";
 import Register from "./components/Register";
 import Header from "./components/Header";
+import Admin from "./components/Admin";
 import EmailVerification from "./components/EmailVerification";
+import ProtectedRoute from "./components/ProtectedRoute";
+import CreateTeacher from "./components/CreateTeacher";
+import ManageAccount from "./components/ManageAccount";
+import TeacherDashboard from "./components/TeacherDashboard";
+import CreateAssignment from "./components/CreateAssignment";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -16,15 +22,22 @@ ReactDOM.render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />} />
-          <Route path="assignments" element={<Assignments />} />
-          <Route path="classes" element={<Classes />} />
-          <Route path="profile" element={<Profile />} />
+          <Route element={<ProtectedRoute />}>
+            <Route path="assignments" element={<Assignments />} />
+            <Route path="classes" element={<Classes />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="dashboard-student" element={<Header />} />
+            <Route path="dashboard-teacher" element={<TeacherDashboard />} />
+            <Route
+              path="dashboard-teacher/create-assignment"
+              element={<CreateAssignment />}
+            />
+            <Route path="admin" element={<Admin />} />
+            <Route path="admin/create-teacher" element={<CreateTeacher />} />
+            <Route path="admin/manage-account" element={<ManageAccount />} />
+          </Route>
+          <Route path="email-verification" element={<EmailVerification />} />
           <Route path="register" element={<Register />} />
-          <Route path="dashboard-student" element={<Header />} />
-          <Route
-            path="register/email-verification"
-            element={<EmailVerification />}
-          />
         </Routes>
       </BrowserRouter>
     </ChakraProvider>

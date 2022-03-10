@@ -10,15 +10,15 @@ function Header() {
         <Button
           leftIcon={<FaUserCircle />}
           variant="link"
-          colorScheme="blue"
+          colorScheme="teal"
           p="5"
         >
           <Link to="/profile">Profile</Link>
         </Button>
-        <Button variant="link" colorScheme="blue" p="5">
+        <Button variant="link" colorScheme="teal" p="5">
           <Link to="/classes">Classes</Link>
         </Button>
-        <Button variant="link" colorScheme="blue" padding="5">
+        <Button variant="link" colorScheme="teal" padding="5">
           <Link to="/assignments">Assignments</Link>
         </Button>
       </Box>

@@ -34,8 +34,9 @@ export default function Register() {
         name: name,
         password: password,
         email: email,
+        role: "student",
       });
-      if (response.data === "Error") {
+      if (response.data.msg === "Error") {
         console.log(response.data);
         setEmailValidity("true");
         setLoading(false);
@@ -47,7 +48,7 @@ export default function Register() {
         setEmail("");
         setName("");
         setPassword("");
-        navigate("email-verification");
+        navigate("../email-verification");
 
         console.log(response);
       }

@@ -30,7 +30,9 @@ function EmailVerification() {
       if (response.data.length) {
         setLoading(false);
         setOtp("");
-        navigate("/");
+        console.log(response.data[0].role);
+        if (response.data[0].role === "teacher") navigate(-1);
+        else navigate("/");
       } else {
         setOtpValidity("true");
         setLoading(false);
