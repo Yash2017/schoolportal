@@ -7,7 +7,7 @@ function UserInfo({ name, email, role, delFunc, userClass }) {
       <Box
         borderWidth="1px"
         borderRadius="lg"
-        bg="teal.100"
+        bg=""
         p="10"
         fontSize="lg"
         minW="full"

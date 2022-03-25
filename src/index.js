@@ -17,10 +17,10 @@ import TeacherDashboard from "./components/TeacherDashboard";
 import CreateAssignment from "./components/CreateAssignment";
 import ViewAssignment from "./components/ViewAssignment";
 import StudentDashboard from "./components/StudentDashboard";
-
+import theme from "./theme";
 ReactDOM.render(
   <React.StrictMode>
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />} />

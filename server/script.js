@@ -40,12 +40,12 @@ app.post("/register", (req, res) => {
             pool: true,
             port: 587,
             auth: {
-              user: "communications@inradius.in",
-              pass: "IR@CI_2022",
+              user: "yashkakade2015@gmail.com",
+              pass: "Qwertyuiop@2015",
             },
           });
           let mailOptions = {
-            from: "OTP <communications@inradius.in>",
+            from: "OTP <yashkakade2015@gmail.com>",
             to: req.body.email,
             subject: "Otp Verification",
             html: `${id}`,
@@ -54,6 +54,7 @@ app.post("/register", (req, res) => {
           transporter.sendMail(mailOptions, async (err, info) => {
             if (err) {
               //console.log(err);
+              console.log(err);
               return res.json("Error");
             } else {
               return res.json({
@@ -285,7 +286,6 @@ app.get("/get-my-assignment", verifyToken, getClass, (req, res) => {
       [req.class],
       (err, results) => {
         if (results) {
-          console.log(results);
           return res.json(results);
         } else {
           return res.json(err);

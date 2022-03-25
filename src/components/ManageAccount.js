@@ -24,6 +24,9 @@ function ManageAccount() {
       data: {
         email,
       },
+      headers: {
+        Authorization: localStorage.getItem("token"),
+      },
     });
     setUsers((prev) => {
       const newUser = prev.filter((prevUser) => prevUser.email !== email);
