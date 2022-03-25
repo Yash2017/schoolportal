@@ -28,6 +28,8 @@ app.post("/register", (req, res) => {
   try {
     //const val = Math.floor(1000 + Math.random() * 9000);
     const id = String(uuidv4()).slice(0, 4);
+    const email = ""; //Enter your email here
+    const password = ""; //Enter your password here
     console.log(id);
     db.query(
       `INSERT INTO STUDENTS_NEW VALUES('${req.body.email}', '${req.body.password}', '${req.body.name}', '${id}', '${req.body.role}', '${req.body.class}')`,
@@ -40,12 +42,12 @@ app.post("/register", (req, res) => {
             pool: true,
             port: 587,
             auth: {
-              user: "yashkakade2015@gmail.com",
-              pass: "Qwertyuiop@2015",
+              user: email,
+              pass: password,
             },
           });
           let mailOptions = {
-            from: "OTP <yashkakade2015@gmail.com>",
+            from: "OTP",
             to: req.body.email,
             subject: "Otp Verification",
             html: `${id}`,
