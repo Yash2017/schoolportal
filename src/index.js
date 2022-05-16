@@ -17,7 +17,11 @@ import TeacherDashboard from "./components/TeacherDashboard";
 import CreateAssignment from "./components/CreateAssignment";
 import ViewAssignment from "./components/ViewAssignment";
 import StudentDashboard from "./components/StudentDashboard";
+import Doubt from "./components/Doubt";
 import theme from "./theme";
+import ViewDoubt from "./components/ViewDoubt";
+import MakeTest from "./components/MakeTest";
+import ViewTest from "./components/ViewTest";
 ReactDOM.render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
@@ -28,6 +32,7 @@ ReactDOM.render(
             <Route path="assignments" element={<Assignments />} />
             <Route path="classes" element={<Classes />} />
             <Route path="profile" element={<Profile />} />
+            <Route path="submit-test" element={<ViewTest />} />
             <Route path="dashboard-student" element={<StudentDashboard />} />
             <Route path="dashboard-teacher" element={<TeacherDashboard />} />
             <Route
@@ -38,12 +43,18 @@ ReactDOM.render(
               path="dashboard-teacher/view-assignment"
               element={<ViewAssignment />}
             />
+            <Route
+              path="dashboard-teacher/view-doubts"
+              element={<ViewDoubt />}
+            />
+            <Route path="dashboard-teacher/make-test" element={<MakeTest />} />
             <Route path="admin" element={<Admin />} />
             <Route path="admin/create-teacher" element={<CreateTeacher />} />
             <Route path="admin/manage-account" element={<ManageAccount />} />
           </Route>
           <Route path="email-verification" element={<EmailVerification />} />
           <Route path="register" element={<Register />} />
+          <Route path="raise-doubt" element={<Doubt />} />
         </Routes>
       </BrowserRouter>
     </ChakraProvider>

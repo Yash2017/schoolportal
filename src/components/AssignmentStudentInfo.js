@@ -1,13 +1,13 @@
 import React from "react";
 import { Box, Text, Button, Flex } from "@chakra-ui/react";
-import { FaTrash } from "react-icons/fa";
-function AssignmentInfo({ name, dueDate, deleteAssignment }) {
+import { FaEdit } from "react-icons/fa";
+function AssignmentInfo({ name, dueDate, submitAssignment }) {
   return (
     <Flex ml="8" mr="8" mb="8">
       <Box
         borderWidth="1px"
         borderRadius="lg"
-        bg="teal.900"
+        bg=""
         p="10"
         fontSize="lg"
         minW="full"
@@ -17,11 +17,11 @@ function AssignmentInfo({ name, dueDate, deleteAssignment }) {
         <Text mt="4">Due: {dueDate}</Text>
         <Button
           mt="4"
-          leftIcon={<FaTrash />}
-          onClick={() => deleteAssignment(dueDate)}
+          leftIcon={<FaEdit />}
+          onClick={() => submitAssignment(dueDate)}
         >
           {" "}
-          Remove Assignment{" "}
+          Submit Assignment{" "}
         </Button>
       </Box>
     </Flex>

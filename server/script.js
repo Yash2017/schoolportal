@@ -212,7 +212,27 @@ const getClass = (req, res, next) => {
     }
   );
 };
-
+app.post("/raise-doubt", verifyToken, getClass, (req, res) => {
+  //console.log(req.body);
+  //const { name, password, email } = req.body;
+  //console.log(pass);
+  try {
+    db.query(
+      `INSERT INTO doubt VALUES('${req.body.doubt}', '${req.email}', '${req.class}')`,
+      (err, results) => {
+        if (results) {
+          return res.json("Success");
+        } else {
+          return res.json(err);
+        }
+        //else if (err) res.json(err);
+      }
+    );
+    //res.send("Created the user");
+  } catch (err) {
+    console.log(err);
+  }
+});
 app.post("/create-assignment", verifyToken, getClass, (req, res) => {
   //console.log(req.body);
   //const { name, password, email } = req.body;
@@ -235,12 +255,54 @@ app.post("/create-assignment", verifyToken, getClass, (req, res) => {
   }
 });
 
+app.post("/create-test", verifyToken, getClass, (req, res) => {
+  //console.log(req.body);
+  //const { name, password, email } = req.body;
+  //console.log(pass);
+  try {
+    db.query(
+      `INSERT INTO test VALUES('${req.body.name}', '${req.body.email}', '${req.class}')`,
+      (err, results) => {
+        if (results) {
+          return res.json("Success");
+        } else {
+          return res.json(err);
+        }
+        //else if (err) res.json(err);
+      }
+    );
+    //res.send("Created the user");
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 app.get("/get-assignments", verifyToken, (req, res) => {
   //console.log(req.body);
   //const { name, password, email } = req.body;
   //console.log(pass);
   try {
     db.query(`SELECT * FROM assignment`, (err, results) => {
+      if (results) {
+        console.log(results);
+        return res.json(results);
+      } else {
+        return res.json(err);
+      }
+      //else if (err) res.json(err);
+    });
+    //res.send("Created the user");
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.get("/get-test", verifyToken, (req, res) => {
+  //console.log(req.body);
+  //const { name, password, email } = req.body;
+  //console.log(pass);
+  try {
+    db.query(`SELECT * FROM test`, (err, results) => {
       if (results) {
         console.log(results);
         return res.json(results);
@@ -285,6 +347,29 @@ app.get("/get-my-assignment", verifyToken, getClass, (req, res) => {
   try {
     db.query(
       `SELECT * FROM assignment WHERE class = ?`,
+      [req.class],
+      (err, results) => {
+        if (results) {
+          return res.json(results);
+        } else {
+          return res.json(err);
+        }
+        //else if (err) res.json(err);
+      }
+    );
+    //res.send("Created the user");
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.get("/get-my-doubt", verifyToken, getClass, (req, res) => {
+  //console.log(req.body);
+  //const { name, password, email } = req.body;
+  //console.log(pass);
+  try {
+    db.query(
+      `SELECT * FROM doubt WHERE subject = ?`,
       [req.class],
       (err, results) => {
         if (results) {

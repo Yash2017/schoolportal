@@ -21,6 +21,12 @@ function Header() {
         <Button variant="link" colorScheme="teal" padding="5">
           <Link to="/assignments">Assignments</Link>
         </Button>
+        <Button variant="link" colorScheme="teal" padding="5">
+          <Link to="/raise-doubt">Doubt</Link>
+        </Button>
+        <Button variant="link" colorScheme="teal" padding="5">
+          <Link to="/submit-test">Tests</Link>
+        </Button>
       </Box>
     </header>
   );
