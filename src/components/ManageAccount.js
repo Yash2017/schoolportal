@@ -36,20 +36,21 @@ function ManageAccount() {
   };
   return (
     <>
-      <Admin />
-      {users &&
-        users.map((user, i) => {
-          return (
-            <UserInfo
-              key={i}
-              name={user.name}
-              email={user.email}
-              role={user.role}
-              delFunc={deleteUser}
-              userClass={user.class}
-            />
-          );
-        })}
+      <Admin>
+        {users &&
+          users.map((user, i) => {
+            return (
+              <UserInfo
+                key={i}
+                name={user.name}
+                email={user.email}
+                role={user.role}
+                delFunc={deleteUser}
+                userClass={user.class}
+              />
+            );
+          })}
+      </Admin>
     </>
   );
 }

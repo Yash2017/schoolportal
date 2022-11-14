@@ -23,22 +23,23 @@ function Doubt() {
   };
   return (
     <>
-      <Header />
-      <div style={{ padding: 20 }}>
-        <Input
-          placeholder="Enter a doubt"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-        />
-        <Button
-          mt={4}
-          mb="4"
-          colorScheme="teal"
-          onClick={() => submitHandler()}
-        >
-          Submit
-        </Button>
-      </div>
+      <Header>
+        <div style={{ padding: 20 }}>
+          <Input
+            placeholder="Enter a doubt"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+          />
+          <Button
+            mt={4}
+            mb="4"
+            colorScheme="teal"
+            onClick={() => submitHandler()}
+          >
+            Submit
+          </Button>
+        </div>
+      </Header>
     </>
   );
 }

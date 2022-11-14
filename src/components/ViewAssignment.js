@@ -40,18 +40,19 @@ function ViewAssignment() {
   };
   return (
     <>
-      <TeacherDashboard />
-      {assignments &&
-        assignments.map((assignment, i) => {
-          return (
-            <AssignmentInfo
-              key={i}
-              name={assignment.name}
-              dueDate={assignment.due}
-              deleteAssignment={delAssignment}
-            />
-          );
-        })}
+      <TeacherDashboard>
+        {assignments &&
+          assignments.map((assignment, i) => {
+            return (
+              <AssignmentInfo
+                key={i}
+                name={assignment.name}
+                dueDate={assignment.due}
+                deleteAssignment={delAssignment}
+              />
+            );
+          })}
+      </TeacherDashboard>
     </>
   );
 }

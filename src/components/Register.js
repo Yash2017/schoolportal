@@ -12,6 +12,8 @@ import {
   CircularProgress,
   useToast,
   Select,
+  Image,
+  Spacer,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -62,8 +64,40 @@ export default function Register() {
     }
   };
   return (
-    <Flex minH="100vh" width="full" align="center" justifyContent="center">
-      <Box>
+    <Flex
+      minH="100vh"
+      width="full"
+      align="center"
+      justifyContent="space-between"
+    >
+      <Box
+        // boxSize="sm"
+        // style={{ marginRight: "40%" }}
+        width="50%"
+        height={"100vh"}
+        bg="teal"
+      >
+        <Flex
+          align={"center"}
+          height="100%"
+          justifyContent="center"
+          alignItems={"center"}
+          flexDirection="column"
+        >
+          <Image
+            src="https://i.postimg.cc/G37dVFKQ/stepahead.jpg"
+            width={"400px"}
+            height={"400px"}
+            borderRadius="2xl"
+            mb="15px"
+          />
+          <Text color={"white"} fontSize="lg">
+            This is in collaboration with Shah & Anchor Kutchhi Engineering
+            College
+          </Text>
+        </Flex>
+      </Box>
+      <Box mr="13%">
         <Heading align="center" mb="4">
           Register
         </Heading>

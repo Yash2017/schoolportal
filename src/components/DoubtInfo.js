@@ -7,7 +7,7 @@ function DoubtInfo({ name, owner }) {
       <Box
         borderWidth="1px"
         borderRadius="lg"
-        bg="teal.900"
+        bg="teal.100"
         p="10"
         fontSize="lg"
         minW="full"

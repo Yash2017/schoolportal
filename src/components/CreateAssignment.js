@@ -54,48 +54,49 @@ function CreateAssignment() {
   };
   return (
     <>
-      <TeacherDashboard />
-      <Flex minH="75vh" width="full" align="center" justifyContent="center">
-        <Box>
-          <form onSubmit={(e) => onRegister(e)}>
-            <FormControl isRequired>
-              <FormLabel flex="1" htmlFor="name">
-                Assignment Name
-              </FormLabel>
-              <Input
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                flex="1"
-                id="name"
-                type="text"
-              />
-              <FormLabel flex="1" mt="5" htmlFor="email">
-                Due Date
-              </FormLabel>
-              <Input
-                value={email}
-                onChange={(e) => {
-                  setEmail(e.target.value);
-                  console.log(email);
-                }}
-                flex="1"
-                id="date"
-                type="datetime-local"
-              />
-              <Button
-                width="full"
-                mt="4"
-                mb="4"
-                colorScheme="teal"
-                type="submit"
-                isLoading={loading}
-              >
-                Submit
-              </Button>
-            </FormControl>
-          </form>
-        </Box>
-      </Flex>
+      <TeacherDashboard>
+        <Flex minH="75vh" width="full" align="center" justifyContent="center">
+          <Box>
+            <form onSubmit={(e) => onRegister(e)}>
+              <FormControl isRequired>
+                <FormLabel flex="1" htmlFor="name">
+                  Assignment Name
+                </FormLabel>
+                <Input
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  flex="1"
+                  id="name"
+                  type="text"
+                />
+                <FormLabel flex="1" mt="5" htmlFor="email">
+                  Due Date
+                </FormLabel>
+                <Input
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    console.log(email);
+                  }}
+                  flex="1"
+                  id="date"
+                  type="datetime-local"
+                />
+                <Button
+                  width="full"
+                  mt="4"
+                  mb="4"
+                  colorScheme="teal"
+                  type="submit"
+                  isLoading={loading}
+                >
+                  Submit
+                </Button>
+              </FormControl>
+            </form>
+          </Box>
+        </Flex>
+      </TeacherDashboard>
     </>
   );
 }

@@ -38,35 +38,36 @@ export default function ViewTest() {
   const [assignments, setAssignments] = useState();
   return (
     <div>
-      <Header />
-      {assignments &&
-        assignments.map((assignment, i) => {
-          return (
-            <TestStudentInfo
-              key={i}
-              name={assignment.name}
-              dueDate={assignment.due}
-              submitAssignment={submit}
-            />
-          );
-        })}
+      <Header>
+        {assignments &&
+          assignments.map((assignment, i) => {
+            return (
+              <TestStudentInfo
+                key={i}
+                name={assignment.name}
+                dueDate={assignment.due}
+                submitAssignment={submit}
+              />
+            );
+          })}
 
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Submit Assignment</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <input type="file" id="avatar" name="avatar" accept=".pdf" />
-          </ModalBody>
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Submit Assignment</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <input type="file" id="avatar" name="avatar" accept=".pdf" />
+            </ModalBody>
 
-          <ModalFooter>
-            <Button colorScheme="teal" mr={3} onClick={onClose}>
-              Close
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+            <ModalFooter>
+              <Button colorScheme="teal" mr={3} onClick={onClose}>
+                Close
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      </Header>
     </div>
   );
 }

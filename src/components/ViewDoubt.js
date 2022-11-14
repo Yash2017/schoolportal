@@ -41,17 +41,18 @@ function ViewDoubt() {
   };
   return (
     <>
-      <TeacherDashboard />
-      {assignments &&
-        assignments.map((assignment, i) => {
-          return (
-            <DoubtInfo
-              key={i}
-              name={assignment.doubt}
-              owner={assignment.owner}
-            />
-          );
-        })}
+      <TeacherDashboard>
+        {assignments &&
+          assignments.map((assignment, i) => {
+            return (
+              <DoubtInfo
+                key={i}
+                name={assignment.doubt}
+                owner={assignment.owner}
+              />
+            );
+          })}
+      </TeacherDashboard>
     </>
   );
 }

@@ -7,6 +7,7 @@ app.use(cors());
 app.use(express.json());
 const nodemailer = require("nodemailer");
 const JWT = require("jsonwebtoken");
+const uploadFile = require("./upload");
 
 const verifyToken = async (req, res, next) => {
   const token = req.header("Authorization");
@@ -28,8 +29,8 @@ app.post("/register", (req, res) => {
   try {
     //const val = Math.floor(1000 + Math.random() * 9000);
     const id = String(uuidv4()).slice(0, 4);
-    const email = ""; //Enter your email here
-    const password = ""; //Enter your password here
+    const email = "yashkakade2015@gmail.com"; //Enter your email here
+    const password = "ocbccptckqfbxaou"; //Enter your password here
     console.log(id);
     db.query(
       `INSERT INTO STUDENTS_NEW VALUES('${req.body.email}', '${req.body.password}', '${req.body.name}', '${id}', '${req.body.role}', '${req.body.class}')`,
@@ -277,15 +278,37 @@ app.post("/create-test", verifyToken, getClass, (req, res) => {
   }
 });
 
-app.get("/get-assignments", verifyToken, (req, res) => {
+app.post("/submit-assignment", verifyToken, getClass, async (req, res) => {
   //console.log(req.body);
   //const { name, password, email } = req.body;
   //console.log(pass);
   try {
+    console.log(req.body);
+    await uploadFile(req, res);
+    // db.query(
+    //   `INSERT INTO submitted_assignment VALUES('${req.email}', '${req.class}')`,
+    //   (err, results) => {
+    //     if (results) {
+    //       return res.json("Success");
+    //     } else {
+    //       return res.json(err);
+    //     }
+    //     //else if (err) res.json(err);
+    //   }
+    // );
+    //res.send("Created the user");
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.get("/get-assignments", verifyToken, getClass, (req, res) => {
+  try {
     db.query(`SELECT * FROM assignment`, (err, results) => {
       if (results) {
-        console.log(results);
-        return res.json(results);
+        const newResults = results.filter((ind) => ind.class === req.class);
+        // console.log(newResults);
+        return res.json(newResults);
       } else {
         return res.json(err);
       }

@@ -29,21 +29,22 @@ export function Profile() {
   };
   return (
     <div>
-      <Header />
-      {userData && (
-        <Box pl="35">
-          <Text fontSize="lg">
-            Name: <Text as="em">{userData[0].name}</Text>
-            <br />
-            Email: <Text as="em">{userData[0].email}</Text>
-            <br />
-            Role: <Text as="em">{userData[0].role}</Text>
-          </Text>
-          <Button mt={4} mb="4" colorScheme="teal" onClick={logout}>
-            Logout
-          </Button>
-        </Box>
-      )}
+      <Header>
+        {userData && (
+          <Box pl="35">
+            <Text fontSize="lg">
+              Name: <Text as="em">{userData[0].name}</Text>
+              <br />
+              Email: <Text as="em">{userData[0].email}</Text>
+              <br />
+              Role: <Text as="em">{userData[0].role}</Text>
+            </Text>
+            <Button mt={4} mb="4" colorScheme="teal" onClick={logout}>
+              Logout
+            </Button>
+          </Box>
+        )}
+      </Header>
     </div>
   );
 }
