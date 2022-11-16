@@ -12,8 +12,10 @@ import {
   ModalFooter,
   useDisclosure,
   ModalHeader,
+  useToast,
 } from "@chakra-ui/react";
 export default function Assignments() {
+  const toast = useToast();
   const api = axios.create({
     baseURL: "http://localhost:4000/",
   });
@@ -29,43 +31,60 @@ export default function Assignments() {
     };
     fetchAssignments();
   }, []);
-  const submit = (due) => {
+  const submit = (due, name) => {
+    setAssign(name);
     onOpen();
   };
 
   const onSubmit = async () => {
     if (file) {
-      const response = await api.post(
-        "submit-assignment",
-        {
-          file: file,
+      console.log(file);
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("assignment", assign);
+      const response = await api.post("submit-assignment", formData, {
+        headers: {
+          Authorization: localStorage.getItem("token"),
         },
-        {
-          headers: {
-            Authorization: localStorage.getItem("token"),
-          },
-        }
-      );
+      });
+
+      toast({
+        title: "Assignment Submitted",
+        // description: ",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+      onClose();
     }
   };
+
+  const download = async (due, name) => {
+    window.open(`http://localhost:4000/download/${due}`);
+  };
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [assignments, setAssignments] = useState();
+  const [assign, setAssign] = useState();
   const [file, setFile] = useState();
   return (
     <div>
       <Header>
-        {assignments &&
-          assignments.map((assignment, i) => {
-            return (
-              <AssignmentStudentInfo
-                key={i}
-                name={assignment.name}
-                dueDate={assignment.due}
-                submitAssignment={submit}
-              />
-            );
-          })}
-
+        <div style={{ marginTop: "10px" }}>
+          {assignments &&
+            assignments.map((assignment, i) => {
+              return (
+                <AssignmentStudentInfo
+                  key={i}
+                  name={assignment.name}
+                  dueDate={assignment.due}
+                  submitAssignment={submit}
+                  fileName={assignment.path}
+                  download={download}
+                />
+              );
+            })}
+        </div>
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay />
           <ModalContent>

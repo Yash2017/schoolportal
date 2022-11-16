@@ -19,7 +19,7 @@ import {
 } from "@chakra-ui/react";
 // import { Link } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
-import { FiStar, FiUser, FiSave } from "react-icons/fi";
+import { FiStar, FiUser, FiSave, FiCheck, FiCpu } from "react-icons/fi";
 import axios from "axios";
 function TeacherDashboard({ children }) {
   const toast = useToast();
@@ -68,7 +68,12 @@ function TeacherDashboard({ children }) {
       link: "/dashboard-teacher/view-assignment",
     },
     { name: "View Doubt", icon: FiStar, link: "view-doubts" },
-    { name: "Make Test", icon: FiStar, link: "make-test" },
+    {
+      name: "Check Assignment",
+      icon: FiCheck,
+      link: "/dashboard-teacher/submitted-assignment",
+    },
+    // { name: "Make Test", icon: FiCpu, link: "make-test" },
   ];
   const SidebarContent = ({ onClose, ...rest }) => {
     return (

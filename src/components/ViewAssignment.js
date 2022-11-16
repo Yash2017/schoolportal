@@ -21,6 +21,10 @@ function ViewAssignment() {
 
   const [assignments, setAssignments] = useState();
 
+  const download = async (due, name) => {
+    window.open(`http://localhost:4000/download/${due}`);
+  };
+
   const delAssignment = async (due) => {
     const user = await api.delete("delete-assignment", {
       data: {
@@ -41,17 +45,21 @@ function ViewAssignment() {
   return (
     <>
       <TeacherDashboard>
-        {assignments &&
-          assignments.map((assignment, i) => {
-            return (
-              <AssignmentInfo
-                key={i}
-                name={assignment.name}
-                dueDate={assignment.due}
-                deleteAssignment={delAssignment}
-              />
-            );
-          })}
+        <div style={{ marginTop: "10px" }}>
+          {assignments &&
+            assignments.map((assignment, i) => {
+              return (
+                <AssignmentInfo
+                  key={i}
+                  name={assignment.name}
+                  dueDate={assignment.due}
+                  deleteAssignment={delAssignment}
+                  download={download}
+                  fileName={assignment.path}
+                />
+              );
+            })}
+        </div>
       </TeacherDashboard>
     </>
   );

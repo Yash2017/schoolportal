@@ -106,6 +106,11 @@ export default function Register() {
             <FormLabel flex="1" htmlFor="name">
               Name
             </FormLabel>
+            <script
+              async
+              src="//freeimage.host/sdk/pup.js"
+              data-url="https://freeimage.host/upload"
+            ></script>
             <Input
               value={name}
               onChange={(e) => setName(e.target.value)}

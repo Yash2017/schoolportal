@@ -35,7 +35,7 @@ function Header({ children }) {
     { name: "Classes", icon: FiMenu, link: "/classes" },
     { name: "Assignments", icon: FiSave, link: "/assignments" },
     { name: "Doubt", icon: FiStar, link: "/raise-doubt" },
-    { name: "Test", icon: FiStar, link: "/submit-test" },
+    // { name: "Test", icon: FiStar, link: "/submit-test" },
   ];
   // return (
   //   <header>

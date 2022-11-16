@@ -234,13 +234,43 @@ app.post("/raise-doubt", verifyToken, getClass, (req, res) => {
     console.log(err);
   }
 });
-app.post("/create-assignment", verifyToken, getClass, (req, res) => {
+app.post("/create-assignment", verifyToken, getClass, async (req, res) => {
   //console.log(req.body);
   //const { name, password, email } = req.body;
   //console.log(pass);
   try {
+    await uploadFile(req, res);
+    // console.log(req.originalname);
+    console.log(
+      `INSERT INTO assignment VALUES('${req.body.name}', '${req.body.email}', '${req.class}, '${req.originalname}')`
+    );
     db.query(
-      `INSERT INTO assignment VALUES('${req.body.name}', '${req.body.email}', '${req.class}')`,
+      `INSERT INTO assignment VALUES('${req.body.name}', '${req.body.email}', '${req.class}', '${req.originalname}')`,
+      (err, results) => {
+        if (results) {
+          return res.json("Success");
+        } else {
+          return res.json(err);
+        }
+        //else if (err) res.json(err);
+      }
+    );
+    //res.send("Created the user");
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.post("/add-remarks", (req, res) => {
+  //console.log(req.body);
+  //const { name, password, email } = req.body;
+  //console.log(pass);
+  // console.log(
+  //   `UPDATE student.submitted_assignment SET remarks=${req.body.data.remark} WHERE email=${req.body.data.email}`
+  // );
+  try {
+    db.query(
+      `UPDATE submitted_assignment SET remarks = '${req.body.data.remark}' WHERE email = '${req.body.data.email}'`,
       (err, results) => {
         if (results) {
           return res.json("Success");
@@ -283,20 +313,22 @@ app.post("/submit-assignment", verifyToken, getClass, async (req, res) => {
   //const { name, password, email } = req.body;
   //console.log(pass);
   try {
-    console.log(req.body);
+    // console.log(req.file.path);
     await uploadFile(req, res);
-    // db.query(
-    //   `INSERT INTO submitted_assignment VALUES('${req.email}', '${req.class}')`,
-    //   (err, results) => {
-    //     if (results) {
-    //       return res.json("Success");
-    //     } else {
-    //       return res.json(err);
-    //     }
-    //     //else if (err) res.json(err);
-    //   }
-    // );
-    //res.send("Created the user");
+    console.log(req.originalname);
+    db.query(
+      `INSERT INTO submitted_assignment VALUES('${req.email}', '${req.originalname}', '${req.body.assignment}', '${req.class}', '')`,
+      (err, results) => {
+        if (results) {
+          // db.query(`UPDATE assignment SET `)
+          return res.json("Success");
+        } else {
+          return res.json(err);
+        }
+        //else if (err) res.json(err);
+      }
+    );
+    // res.send("Uploaded the file");
   } catch (err) {
     console.log(err);
   }
@@ -307,6 +339,8 @@ app.get("/get-assignments", verifyToken, getClass, (req, res) => {
     db.query(`SELECT * FROM assignment`, (err, results) => {
       if (results) {
         const newResults = results.filter((ind) => ind.class === req.class);
+        // db.query(`SELECT * FROM submitted_assignment`, (err, resullt) => {
+        // });
         // console.log(newResults);
         return res.json(newResults);
       } else {
@@ -318,6 +352,40 @@ app.get("/get-assignments", verifyToken, getClass, (req, res) => {
   } catch (err) {
     console.log(err);
   }
+});
+
+app.get("/get-submitted-assignment", verifyToken, getClass, (req, res) => {
+  try {
+    db.query(`SELECT * FROM submitted_assignment`, (err, results) => {
+      if (results) {
+        // const newResults = results.filter((ind) => ind.class === req.class);
+        // db.query(`SELECT * FROM submitted_assignment`, (err, resullt) => {
+        // });
+        // console.log(newResults);
+        return res.json(results);
+      } else {
+        return res.json(err);
+      }
+      //else if (err) res.json(err);
+    });
+    //res.send("Created the user");
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.get("/download/:id", (req, res) => {
+  const fileName = req.params.id;
+  const directoryPath = __dirname + "/temp/";
+  console.log(directoryPath + fileName);
+  // res.setHeader("Content-disposition", "attachment; filename=" + fileName);
+  res.download(directoryPath + fileName, (err) => {
+    if (err) {
+      res.status(500).send({
+        message: "Could not download the file. " + err,
+      });
+    }
+  });
 });
 
 app.get("/get-test", verifyToken, (req, res) => {

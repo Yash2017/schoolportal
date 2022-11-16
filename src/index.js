@@ -22,6 +22,7 @@ import theme from "./theme";
 import ViewDoubt from "./components/ViewDoubt";
 import MakeTest from "./components/MakeTest";
 import ViewTest from "./components/ViewTest";
+import CheckAssignment from "./components/CheckAssignment";
 ReactDOM.render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
@@ -42,6 +43,10 @@ ReactDOM.render(
             <Route
               path="dashboard-teacher/view-assignment"
               element={<ViewAssignment />}
+            />
+            <Route
+              path="dashboard-teacher/submitted-assignment"
+              element={<CheckAssignment />}
             />
             <Route
               path="dashboard-teacher/view-doubts"

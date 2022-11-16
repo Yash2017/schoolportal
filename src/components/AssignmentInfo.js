@@ -1,7 +1,13 @@
 import React from "react";
 import { Box, Text, Button, Flex } from "@chakra-ui/react";
 import { FaTrash } from "react-icons/fa";
-function AssignmentInfo({ name, dueDate, deleteAssignment }) {
+function AssignmentInfo({
+  name,
+  dueDate,
+  deleteAssignment,
+  download,
+  fileName,
+}) {
   return (
     <Flex ml="8" mr="8" mb="8">
       <Box
@@ -22,6 +28,10 @@ function AssignmentInfo({ name, dueDate, deleteAssignment }) {
         >
           {" "}
           Remove Assignment{" "}
+        </Button>
+        <Button mt="4" ml={"4"} onClick={() => download(fileName)}>
+          {" "}
+          Download Assignment{" "}
         </Button>
       </Box>
     </Flex>

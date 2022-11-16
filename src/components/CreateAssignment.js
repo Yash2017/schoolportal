@@ -18,16 +18,32 @@ function CreateAssignment() {
   const [email, setEmail] = useState(new Date().toISOString().slice(0, -8));
   const [name, setName] = useState("");
   const [loading, setLoading] = useState("");
+  const [file, setFile] = useState();
   const onRegister = async (e) => {
     e.preventDefault();
     setLoading("rue");
     try {
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append(
+        "email",
+        email.toLocaleString("en-US", { timeZone: "Asia/Kolkata" })
+      );
+      formData.append("file", file);
       const response = await api.post(
         "create-assignment",
-        {
-          name: name,
-          email: email.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }),
-        },
+        // {
+        formData,
+        // body: {
+        //   // ...formData,
+        //   file: file,
+        //   name: name,
+        //   email: email.toLocaleString("en-US", { timeZone: "Asia/Kolkata" }),
+        // },
+        // },
+        // {
+        //   name: name,
+        // },
         {
           headers: {
             Authorization: localStorage.getItem("token"),
@@ -81,6 +97,14 @@ function CreateAssignment() {
                   flex="1"
                   id="date"
                   type="datetime-local"
+                />
+                <input
+                  style={{ marginTop: "20px" }}
+                  type="file"
+                  id="avatar"
+                  name="avatar"
+                  accept=".docx"
+                  onChange={(e) => setFile(e.target.files[0])}
                 />
                 <Button
                   width="full"
