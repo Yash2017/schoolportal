@@ -34,12 +34,18 @@ function TeacherDashboard({ children }) {
           Authorization: localStorage.getItem("token"),
         },
       });
-      const user = await api.get("user-info", {
-        headers: {
-          Authorization: localStorage.getItem("token"),
-        },
+      // const user = await api.get("user-info", {
+      //   headers: {
+      //     Authorization: localStorage.getItem("token"),
+      //   },
+      // });
+      const name = localStorage.getItem("name");
+      const pp = localStorage.getItem("profilePic");
+      setUserData({
+        name: name,
+        profilePic: pp,
       });
-      setUserData(user.data);
+      console.log(userData);
       console.log(toasts.data);
       (children === null || children === undefined) &&
         toasts.data &&
@@ -56,7 +62,7 @@ function TeacherDashboard({ children }) {
     assign();
   }, []);
   const LinkItems = [
-    { name: "Profile", icon: FiUser, link: "/profile" },
+    { name: "Profile", icon: FiUser, link: "/dashboard-teacher/profile" },
     {
       name: "Make Assignments",
       icon: FiSave,
@@ -67,7 +73,11 @@ function TeacherDashboard({ children }) {
       icon: FiSave,
       link: "/dashboard-teacher/view-assignment",
     },
-    { name: "View Doubt", icon: FiStar, link: "view-doubts" },
+    {
+      name: "View Doubt",
+      icon: FiStar,
+      link: "/dashboard-teacher/view-doubts",
+    },
     {
       name: "Check Assignment",
       icon: FiCheck,
@@ -139,8 +149,8 @@ function TeacherDashboard({ children }) {
   };
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  return (
-    <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
+  return userData !== undefined ? (
+    <Box minH="100vh" bg="gray.100">
       <SidebarContent
         onClose={() => onClose}
         display={{ base: "none", md: "block" }}
@@ -169,19 +179,20 @@ function TeacherDashboard({ children }) {
             >
               <Spacer />
               <Avatar
-              // size={"sm"}
-              // src={
-              //   "https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-              // }
+                // size={"sm"}
+                // src={
+                // "https://res.cloudinary.com/dunl9faht/image/upload/v1668624530/imageName_1668624512.png"
+                // }
+                src={userData.profilePic}
               />
-              <Text>Yash</Text>
+              <Text>{userData.name}</Text>
             </HStack>
           </Box>
           {children}
         </Flex>
       </Box>
     </Box>
-  );
+  ) : null;
 }
 
 export default TeacherDashboard;

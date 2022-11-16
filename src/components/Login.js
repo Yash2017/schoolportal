@@ -45,7 +45,14 @@ export default function Login() {
         setPassword("");
         setEmailValidity("true");
       } else {
+        // const user = await api.get("user-info", {
+        //   headers: {
+        //     Authorization: localStorage.getItem("token"),
+        //   },
+        // });
         localStorage.setItem("token", response.data.token);
+        localStorage.setItem("name", response.data.name);
+        localStorage.setItem("profilePic", response.data.profilePic);
         setLoading(false);
         setEmail("");
         setPassword("");

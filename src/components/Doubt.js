@@ -1,9 +1,10 @@
-import { Button, Input } from "@chakra-ui/react";
+import { Button, Input, useToast } from "@chakra-ui/react";
 import React, { useState } from "react";
 import Header from "./Header";
 import axios from "axios";
 function Doubt() {
   const [input, setInput] = useState("");
+  const toast = useToast();
   const api = axios.create({
     baseURL: "http://localhost:4000/",
   });
@@ -20,6 +21,13 @@ function Doubt() {
       }
     );
     console.log(response);
+    toast({
+      title: "Doubt Added",
+      // description: "We've added your assignment",
+      status: "success",
+      duration: 9000,
+      isClosable: true,
+    });
   };
   return (
     <>

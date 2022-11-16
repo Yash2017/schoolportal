@@ -29,11 +29,13 @@ app.post("/register", (req, res) => {
   try {
     //const val = Math.floor(1000 + Math.random() * 9000);
     const id = String(uuidv4()).slice(0, 4);
-    const email = "yashkakade2015@gmail.com"; //Enter your email here
-    const password = "ocbccptckqfbxaou"; //Enter your password here
-    console.log(id);
+    const email = ""; //Enter your email here
+    const password = ""; //Enter your password here
+    console.log(
+      `INSERT INTO STUDENTS_NEW VALUES('${req.body.email}', '${req.body.password}', '${req.body.name}', '${id}', '${req.body.role}', '${req.body.class}', '${req.body.profilePic}')`
+    );
     db.query(
-      `INSERT INTO STUDENTS_NEW VALUES('${req.body.email}', '${req.body.password}', '${req.body.name}', '${id}', '${req.body.role}', '${req.body.class}')`,
+      `INSERT INTO STUDENTS_NEW VALUES('${req.body.email}', '${req.body.password}', '${req.body.name}', '${id}', '${req.body.role}', '${req.body.class}', '${req.body.profilePic}')`,
       (err, result) => {
         if (result) {
           console.log(result);
@@ -97,10 +99,13 @@ app.post("/login", async (req, res) => {
           if (results.length == 0) {
             return res.json({ msg: "Error" });
           } else {
+            console.log(results);
             const token = await JWT.sign({ email: req.body.email }, "testkey");
             return res.json({
               msg: "Success",
               token: token,
+              name: results[0].name,
+              profilePic: results[0].profilePic,
             });
           }
           //else if (err) res.json(err);
@@ -356,18 +361,21 @@ app.get("/get-assignments", verifyToken, getClass, (req, res) => {
 
 app.get("/get-submitted-assignment", verifyToken, getClass, (req, res) => {
   try {
-    db.query(`SELECT * FROM submitted_assignment`, (err, results) => {
-      if (results) {
-        // const newResults = results.filter((ind) => ind.class === req.class);
-        // db.query(`SELECT * FROM submitted_assignment`, (err, resullt) => {
-        // });
-        // console.log(newResults);
-        return res.json(results);
-      } else {
-        return res.json(err);
+    db.query(
+      `SELECT * FROM submitted_assignment WHERE class='${req.class}'`,
+      (err, results) => {
+        if (results) {
+          // const newResults = results.filter((ind) => ind.class === req.class);
+          // db.query(`SELECT * FROM submitted_assignment`, (err, resullt) => {
+          // });
+          // console.log(newResults);
+          return res.json(results);
+        } else {
+          return res.json(err);
+        }
+        //else if (err) res.json(err);
       }
-      //else if (err) res.json(err);
-    });
+    );
     //res.send("Created the user");
   } catch (err) {
     console.log(err);

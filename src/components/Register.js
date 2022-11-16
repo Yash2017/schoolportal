@@ -26,6 +26,8 @@ const api = axios.create({
 export default function Register() {
   const toast = useToast();
   const navigate = useNavigate();
+  const [file, setFile] = useState();
+  const [fileName, setFileName] = useState();
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
@@ -36,12 +38,27 @@ export default function Register() {
     e.preventDefault();
     setLoading(true);
     try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "ml_default");
+      formData.append(
+        "public_id",
+        "imageName" + "_" + Math.round(Date.now() / 1000)
+      );
+      const uploadData = await fetch(
+        "https://api.cloudinary.com/v1_1/dunl9faht/image/upload",
+        { method: "POST", body: formData }
+      ).then((r) => r.json());
+
+      console.log(uploadData.secure_url);
+
       const response = await api.post("register", {
         name: name,
         password: password,
         email: email,
         role: "student",
         class: subject,
+        profilePic: uploadData.secure_url,
       });
       if (response.data.msg === "Error") {
         console.log(response.data);
@@ -97,7 +114,7 @@ export default function Register() {
           </Text>
         </Flex>
       </Box>
-      <Box mr="13%">
+      <Box mr="10%" width={"400px"}>
         <Heading align="center" mb="4">
           Register
         </Heading>
@@ -106,11 +123,6 @@ export default function Register() {
             <FormLabel flex="1" htmlFor="name">
               Name
             </FormLabel>
-            <script
-              async
-              src="//freeimage.host/sdk/pup.js"
-              data-url="https://freeimage.host/upload"
-            ></script>
             <Input
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -121,6 +133,7 @@ export default function Register() {
             <FormLabel mt="4">Select a Subject</FormLabel>
             <Select
               onChange={(e) => {
+                console.log(e.target.value);
                 setSubject(e.target.value);
               }}
               placeholder="Select Class"
@@ -153,6 +166,22 @@ export default function Register() {
               id="password"
               type="password"
             />
+            <FormLabel mt="4" htmlFor="Password">
+              Profile Picture
+            </FormLabel>
+            <input
+              style={{}}
+              type="file"
+              // id="avatar"
+              // style={{ width: "100px" }}
+              // name="avatar"
+              accept=".jpg"
+              onChange={(e) => {
+                setFile(e.target.files[0]);
+                setFileName(e.target.files[0].name);
+              }}
+            />
+            {fileName ? <Text>{fileName}</Text> : null}
             <Button width="full" mt="4" mb="4" colorScheme="teal" type="submit">
               {loading ? (
                 <CircularProgress isIndeterminate size="7" color="teal" />

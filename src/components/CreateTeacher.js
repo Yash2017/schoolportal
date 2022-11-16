@@ -8,6 +8,7 @@ import {
   FormLabel,
   Input,
   Button,
+  Text,
 } from "@chakra-ui/react";
 
 import axios from "axios";
@@ -19,6 +20,8 @@ function CreateTeacher() {
   });
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  const [file, setFile] = useState();
+  const [fileName, setFileName] = useState();
   const [password, setPassword] = useState("");
   const [subject, setSubject] = useState("");
   const [loading, setLoading] = useState("");
@@ -28,12 +31,27 @@ function CreateTeacher() {
     console.log(subject);
     setLoading("rue");
     try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("upload_preset", "ml_default");
+      formData.append(
+        "public_id",
+        "imageName" + "_" + Math.round(Date.now() / 1000)
+      );
+      const uploadData = await fetch(
+        "https://api.cloudinary.com/v1_1/dunl9faht/image/upload",
+        { method: "POST", body: formData }
+      ).then((r) => r.json());
+
+      console.log(uploadData.secure_url);
+
       const response = await api.post("register", {
         name: name,
         password: password,
         email: email,
         role: "teacher",
         class: subject,
+        profilePic: uploadData.secure_url,
       });
       if (response.data.msg === "Error") {
         console.log(response.data);
@@ -105,6 +123,20 @@ function CreateTeacher() {
                   <option value="Science">Science</option>
                   <option value="English">English</option>
                 </Select>
+                <input
+                  // style={{}}
+                  type="file"
+                  // id="avatar"
+                  // style={{ width: "100px" }}
+                  // name="avatar"
+                  style={{ marginTop: "20px" }}
+                  accept=".jpg"
+                  onChange={(e) => {
+                    setFile(e.target.files[0]);
+                    setFileName(e.target.files[0].name);
+                  }}
+                />
+                {/* {fileName ? <Text>{fileName}</Text> : null} */}
                 <Button
                   width="full"
                   mt="4"
